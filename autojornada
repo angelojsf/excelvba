@@ -1,0 +1,27 @@
+'Preencher jornada fixada em juízo (ex: 6x1 com 1h de intervalo) da admissão/data em tal celula ate demissao/fim do periodo apurado
+'em um dado modelo de planilha de preenchimento com Entrada 1, Saida 1, Entrada 2, Saida 2
+
+Sub Preencher()
+'
+' Preencher Macro
+'atribuicao de formulas procv a celulas de preenchimento, buscando os horarios da matriz de jornada preenchida pelo usuario de acordo
+'com o dia da semana
+   
+   Range("F18").Select
+    Range("F18").FormulaR1C1 = "=IF(RC[-5]>R11C5,"""",IF(RC[-5]<>"""",VLOOKUP(RC[-2],R1C1:R8C5,COLUMN(R2C2:R8C2),FALSE),0))"
+    Range("G18").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(AND(RC[-1]<>0,RC[-1]<>""""),VLOOKUP(RC[-3],R1C1:R8C5,COLUMN(R2C3:R8C3),FALSE),0)"
+    Range("H18").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(AND(RC[-2]<>0,RC[-2]<>""""),VLOOKUP(RC[-4],R1C1:R8C5,COLUMN(R2C4:R8C4),FALSE),0)"
+    Range("I18").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(AND(RC[-3]<>0,RC[-3]<>""""),VLOOKUP(RC[-5],R1C1:R8C5,COLUMN(R2C5:R8C5),FALSE),0)"
+   
+   'selecionar a as celulas e formulas preenchidas e arrastar para ate a linha em que corresponda a data do final do periodo
+   
+   Range("F18:I18").Select
+    Selection.AutoFill Destination:=Range("F18:I" & Range("A" & Rows.Count).End(xlUp).Row)
+    
+End Sub
